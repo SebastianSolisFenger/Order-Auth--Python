@@ -1,0 +1,5 @@
+isLoggedIn True
+--firstName Sebastian
+--lastName Solis
+--email solisfenger@gmail.com
+--password 1234567

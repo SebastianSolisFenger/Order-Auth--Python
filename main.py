@@ -128,7 +128,7 @@ def showLandingPage():
 # ---<EXIT>---
 def shutdown():
     print("\n----------------------------------------")
-    print("See you again!")
+    print("Thanks for visiting us! Hope to see you again!")
     print("----------------------------------------\n")
     exit()
 
@@ -145,7 +145,7 @@ def showProducts():
         print("0. Exit")
 
         for i in range(len(products)):
-            print(f'|<>| {products[i]["name"]} -> {products[i]["price"]}$')
+            print(f'|<>| {i} {products[i]["name"]} -> {products[i]["price"]}$')
 
         option = input("Enter number to select option >> ")
         if option == "+":
@@ -181,7 +181,10 @@ def showAddProductPanel():
         if int(option) > 0 and int(option) <= len(products):
             cartFileReadAndUpdate = open("./cart.txt", "r+")
             cartFileLines = cartFileReadAndUpdate.readlines()
-            cartFileLines.insert(0, f'{products[int(option) - 1]["name"]}\n')
+            cartFileLines.insert(
+                0,
+                f'Producto = {products[int(option) - 1]["name"]} - $ {products[int(option) - 1]["price"]} (USD)\n',
+            )
             cartFileReadAndUpdate.seek(0)
             cartFileReadAndUpdate.writelines(cartFileLines)
             cartFileReadAndUpdate.close()

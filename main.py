@@ -44,7 +44,7 @@ def showLandingPage():
 
 		productsInCartQuantity = len(cartFileReadAndUpdate.readlines())
 
-		print("\n|================|-------|================|\n|================| Pyzer |================|\n|==============|           |==============|")
+		print("\n|================|-------|================|\n|================| Shoppy |================|\n|==============|           |==============|")
 
 		if isLoggedIn: 
 			username = authFileLines[1].split(" ")[1].rstrip()

@@ -6,6 +6,12 @@ USER_PASSWORD = str()
 # IMPORT PRODUCTS FROM FILE
 from MockedDatabase.dataBase import products
 
+# IMPORT SHUTDOWN FROM FILE
+from Functions.shutDown import shutdown
+
+# IMPORT CHECK PRODUCT PRICE FROM FILE
+from Functions.checkProductPrice import checkProductPrice
+
 # ---</MAINPAGE>---
 def showLandingPage():
     while True:
@@ -100,15 +106,15 @@ def showLandingPage():
 # ---</MAINPAGE>---
 
 
-# ---<EXIT>---
-def shutdown():
-    print("\n----------------------------------------")
-    print("Thanks for visiting us! Hope to see you again!")
-    print("----------------------------------------\n")
-    exit()
+# # ---<EXIT>---
+# def shutdown():
+#     print("\n----------------------------------------")
+#     print("Thanks for visiting us! Hope to see you again!")
+#     print("----------------------------------------\n")
+#     exit()
 
 
-# ---</EXIT>---
+# # ---</EXIT>---
 
 
 # ---<PRODUCTS>---
@@ -268,10 +274,10 @@ def showCart():
             print("\n[!] You've entered invalid character.")
 
 
-def checkProductPrice(productName):
-    for product in products:
-        if product["name"] == productName:
-            return product["price"]
+# def checkProductPrice(productName):
+#     for product in products:
+#         if product["name"] == productName:
+#             return product["price"]
 
 
 # ---</CART>---

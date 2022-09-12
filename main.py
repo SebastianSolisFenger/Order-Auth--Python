@@ -247,7 +247,7 @@ def checkTotalAmountOfProductsInCart():
     cartFileRead = open("./cart.txt", "r")
     cartFileLines = cartFileRead.readlines()
     for line in cartFileLines:
-        line = line.rstrip()
+        line = line.split(" ")[2].rstrip()
         totalAmount += checkProductPrice(line)
 
     return totalAmount

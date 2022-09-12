@@ -1,1 +1,2 @@
+Producto = tshirt - $ 25 (USD)
 Producto = hoodie - $ 50 (USD)

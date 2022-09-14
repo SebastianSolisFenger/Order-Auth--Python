@@ -4,6 +4,7 @@ USER_EMAIL = str()
 USER_PASSWORD = str()
 
 # IMPORT PRODUCTS FROM FILE
+from contextlib import nullcontext
 from MockedDatabase.dataBase import products
 
 # IMPORT SHUTDOWN FROM FILE
@@ -23,7 +24,14 @@ def showLandingPage():
         # CART
         cartFileReadAndUpdate = open("./cart.txt", "r+")
 
-        productsInCartQuantity = len(cartFileReadAndUpdate.readlines())
+        # productsInCartQuantity = len(cartFileReadAndUpdate.readlines())
+
+        productsInCartQuantity = 0
+
+        ## check amount of products in cart
+        for line in cartFileReadAndUpdate.readlines():
+            if line.startswith("Producto"):
+                productsInCartQuantity += 1
 
         print(
             "\n|================|-------|================|\n|================| Shoppy |================|\n|==============|           |==============|"
@@ -227,9 +235,12 @@ def checkTotalAmountOfProductsInCart():
     totalAmount = 0
     cartFileRead = open("./cart.txt", "r")
     cartFileLines = cartFileRead.readlines()
+    cartFileLinesLength = len(cartFileLines)
+
     for line in cartFileLines:
-        line = line.split(" ")[2].rstrip()
-        totalAmount += checkProductPrice(line)
+        if line.startswith("Producto"):
+            line = line.split(" ")[2].rstrip()
+            totalAmount += checkProductPrice(line)
 
     return totalAmount
 
@@ -298,11 +309,62 @@ def showOrderPanel(redirectedFrom):
         option = input("Your choice >> ")
         if option == "1":
             # CLEAN CART
-            cartFileWrite = open("./cart.txt", "w")
-            cartFileWrite.writelines("")
-            cartFileWrite.close()
-
             print("\n------------------------------")
+
+            def paymentMethod():
+                while True:
+
+                    price = checkTotalAmountOfProductsInCart()
+                    print("\n====== Payment ======\n")
+                    print(
+                        "\nRemember: With Cash you have a discount of the 15%"
+                        " on the final price \nand with a Credit Card you have 10% "
+                        "of discount\n"
+                    )
+                    method = input("How do you want to pay: Credit or Cash? >> ")
+
+                    if method == "Cash":
+                        print("\n ----> You have choosed Cash as payment method")
+                        discount = price * 0.15
+                        finalPrice = price - discount
+                        print("\n=== > Your final price is", finalPrice, "\n")
+                        print("*** Thanks for buying ***\n")
+                        cartFileReadAndUpdate = open("./cart.txt", "r+")
+                        cartFileLines = cartFileReadAndUpdate.readlines()
+                        cartFileLines.insert(
+                            5,
+                            f"Total with Cash discount = {finalPrice} (USD)\n",
+                        )
+                        cartFileReadAndUpdate.seek(0)
+                        cartFileReadAndUpdate.writelines(cartFileLines)
+                        cartFileReadAndUpdate.close()
+                        break
+                    elif method == "Card":
+                        print("\n----> You have choosed Card as payment method")
+                        discount = price * 0.1
+                        finalPrice = price - discount
+                        print("\n=== > Your final price is", finalPrice, "\n")
+                        print("*** Thanks for buying ***\n")
+                        cartFileReadAndUpdate = open("./cart.txt", "r+")
+                        cartFileLines = cartFileReadAndUpdate.readlines()
+                        cartFileLines.insert(
+                            5,
+                            f"Total with Card discount = {finalPrice} (USD)\n",
+                        )
+                        cartFileReadAndUpdate.seek(0)
+                        cartFileReadAndUpdate.writelines(cartFileLines)
+                        cartFileReadAndUpdate.close()
+                        break
+
+                    else:
+                        print("\n === That is not an option, try again ===")
+
+            paymentMethod()
+
+            # cartFileWrite = open("./cart.txt", "w")
+            # cartFileWrite.writelines("")
+            # cartFileWrite.close()
+
             print(
                 "Thank you very much for shopping in our shop.\nYour clothes will be delivered in up to 3 days."
             )
@@ -537,6 +599,10 @@ def showLogoutPanel():
             authFileWrite = open("authentication.txt", "r+")
             authFileWrite.write("isLoggedIn False")
             authFileWrite.close()
+
+            cartFileWrite = open("./cart.txt", "w")
+            cartFileWrite.writelines("")
+            cartFileWrite.close()
 
             print("\n----------------------------------------")
             print("SUCCESS")

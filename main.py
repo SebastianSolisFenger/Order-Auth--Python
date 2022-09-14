@@ -298,11 +298,39 @@ def showOrderPanel(redirectedFrom):
         option = input("Your choice >> ")
         if option == "1":
             # CLEAN CART
+            print("\n------------------------------")
+            def paymentMethod():
+                while True:
+
+                    price = checkTotalAmountOfProductsInCart()
+                    print('\n====== Payment ======\n')
+                    print('\nRemember: With Cash you have a discount of the 15%' ' on the final price \nand with a Credit Card you have 10% ' 'of discount\n')
+                    method = (input("How do you want to pay: Credit or Cash? >> "))
+
+                    if method == 'Cash':
+                        print('\n ----> You have choosed Cash as payment method')
+                        discount = price * 0.15 
+                        finalPrice = price - discount
+                        print('\n=== > Your final price is', finalPrice, '\n')
+                        print('*** Thanks for buying ***\n')
+                        break
+                    elif method == 'Card':
+                        print('\n----> You have choosed Card as payment method')
+                        discount = price * 0.1 
+                        finalPrice = price - discount
+                        print('\n=== > Your final price is', finalPrice, '\n')
+                        print('*** Thanks for buying ***\n')
+                        break
+
+                    else:
+                        print("\n === That is not an option, try again ===")
+
+            paymentMethod()
+
             cartFileWrite = open("./cart.txt", "w")
             cartFileWrite.writelines("")
             cartFileWrite.close()
 
-            print("\n------------------------------")
             print(
                 "Thank you very much for shopping in our shop.\nYour clothes will be delivered in up to 3 days."
             )

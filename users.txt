@@ -1,3 +1,9 @@
+user[1]
+--firstName Matt
+--lastName Fenger
+--email fenger@gmail.com
+--password 1234567 
+----------------------------------------
 user[0]
 --firstName Sebastian
 --lastName Solis Fenger
